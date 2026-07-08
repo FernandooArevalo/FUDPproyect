@@ -1,13 +1,13 @@
-Cafe Americano|1.5|49|Zona1
+Cafe Americano|1.5|48|Zona1
 Cafe con Leche|2|40|Zona1
-Sandwich de Pollo|3.75|24|Zona2
+Sandwich de Pollo|3.75|21|Zona2
 Hamburguesa Clasica|5.5|20|Zona2
 Papas Fritas|2.25|33|Zona3
 Pizza Personal|4|15|Zona3
 Ensalada de Frutas|3|18|Zona4
 Jugo Natural de Naranja|2.5|30|Zona4
 Gaseosa Cola|1.25|60|Zona1
-Agua Embotellada|1|67|Zona2
+Agua Embotellada|1|65|Zona2
 Burrito de Pollo|4.25|22|Zona3
 Tostadas con Huevo|2.75|27|Zona4
 Chocolate Caliente|2|35|Zona1

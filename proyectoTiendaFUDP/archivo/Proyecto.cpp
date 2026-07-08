@@ -10,8 +10,14 @@ int existencias[25];
 string zona[25];
 string password = "pswrd";
 int totalProductos= 0;
+//factura, variables
+string compraProducto[25];
+float compraPrecio[25];
+int compraCantidad[25];
+float compraSubtotal[25];
+int totalCompra = 0;
 
-// PROTOTIPOS DE FUNCIONES
+// protitipos funciones
 void leerproductos();
 void cargar();
 void guardaproducto();
@@ -22,16 +28,16 @@ int edicionproductos();
 void modocomprador();
 void mostrarproductos();
 void mostrarproductoszona(string zonaSeleccionada);
-void factura();
+void factura(string producto, float precio, int cantidad);
 void linea(int fila);
 
-//MATRIZ
+//matriz
 char decoracion[2][40]={
 {'=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','='},
 {'*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'}
 };
 
-//ARREGLO 
+//arreglo
 string mensajes[5]={
 "Cargando productos...",
 "Preparando sistema...",
@@ -40,7 +46,7 @@ string mensajes[5]={
 "Todo listo..."
 };
 
-//FUNCIONES 
+//funciones del programma 
 void linea(int fila)
 {
     for(int i=0;i<40;i++)
@@ -329,6 +335,35 @@ int edicionproductos()
     return editar;
 }
 
+
+void factura()
+{
+    float total = 0;
+
+    cout << "\n=====================================\n";
+    cout << "         TICKET DE LA COMPRA\n";
+    cout << "=====================================\n";
+
+    cout << "Producto\tPrecio\tCant.\tSubtotal\n";
+
+
+    for(int i = 0; i < totalCompra; i++)
+    {
+        cout << compraProducto[i] << "\t$"
+            << compraPrecio[i] << "\t"
+            << compraCantidad[i] << "\t$"
+            << compraSubtotal[i] << endl;
+
+        total += compraSubtotal[i];
+    }
+
+
+    cout << "-------------------------------------\n";
+    cout << "TOTAL A PAGAR: $" << total << endl;
+    cout << "=====================================\n";
+}
+
+
 void modocomprador()
 {
     int opcionZona;
@@ -464,10 +499,15 @@ void modocomprador()
                 }
                 else
                 {
-                    existencias[opcionProducto] = existencias[opcionProducto] - cantidad;
-
-                    cout << "Compra realizada correctamente." << endl;
-                    cout << "Existencias restantes: " << existencias[opcionProducto] << endl;
+                existencias[opcionProducto] = existencias[opcionProducto] - cantidad;
+                compraProducto[totalCompra] = productos[opcionProducto];
+                compraPrecio[totalCompra] = precio[opcionProducto];
+                compraCantidad[totalCompra] = cantidad;
+                compraSubtotal[totalCompra] = precio[opcionProducto] * cantidad;
+                totalCompra++;
+                cout << "Compra realizada correctamente." << endl;
+                cout << "Existencias restantes: " 
+                << existencias[opcionProducto] << endl;
                 }
             }
         }
@@ -498,35 +538,18 @@ void modocomprador()
 
         } while (seguir != 1 && seguir != 2);
 
-    } while (salir == 0);
+    }while (salir == 0);
 
     guardaproducto();
-}
-
-void factura()
+    if(totalCompra > 0)
 {
-    string compraProducto[25];
-    float compraPrecio[25];
-    int compraCantidad[25];
-    float compraSubtotal[25];
-    int totalCompra = 0;
+    factura();
 
-    float total = 0;
-    cout << "\n=====================================\n";
-    cout << "         TICKET DE LA COMPRA\n";
-    cout << "=====================================\n";
-    cout << "Producto\tPrecio\tCant.\tSubtotal\n";
-    for (int i = 0; i < totalCompra; i++)
-    {
-        cout << compraProducto[i] << "\t$"
-             << compraPrecio[i] << "\t"
-             << compraCantidad[i] << "\t$"
-             << compraSubtotal[i] << endl;
-        total += compraSubtotal[i];
-    }
-    cout << "-------------------------------------\n";
-    cout << "TOTAL A PAGAR: $" << total << endl;
-    cout << "=====================================\n";
+    cout << "\nPresione una tecla para volver al menu...";
+    system("pause");
+
+    totalCompra = 0;
+}
 }
 
 int main()
@@ -536,7 +559,7 @@ int main()
     leerproductos();
     cargar();
 
-   do
+do
     {
     opcion = menuppal();
 
@@ -563,7 +586,7 @@ int main()
         cout <<"opcion invalida..." <<endl;
             break;
         } 
-  } while(opcion != 3);
+} while(opcion != 3);
     
 
     return 0;
